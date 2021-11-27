@@ -1,0 +1,22 @@
+type Todo {
+  task: String!
+  completed: Boolean!
+  owner: String
+}
+
+type SpaceUsers {
+  email: String! @unique
+}
+
+type Note {
+  title: String!
+  content: String
+  owner: String
+}
+
+type Query {
+  allTodos: [Todo!]
+  allNotes: [Note!]
+  todo_by_user(owner: String): [Todo!]
+  note_by_user(owner: String): [Note!]
+}
