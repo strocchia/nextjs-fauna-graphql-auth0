@@ -9,8 +9,10 @@ import Layout from "../components/Layout";
 // import utilStyles from "../styles/utils.module.css";
 import { graphQLClient } from "../utils/graphql-client";
 
+import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
-import { SimpleMdeReact } from "react-simplemde-editor";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
 const EditNote = ({ note, id }) => {
   const [value, setValue] = useState(note.content || "");
@@ -91,7 +93,12 @@ const EditNote = ({ note, id }) => {
         </div>
         <div className="mb-3">
           <label>Content</label>
-          <SimpleMdeReact className="prose prose-md max-w-5xl" value={value} onChange={onChange} />
+          <SimpleMDE
+            className="prose prose-md max-w-5xl"
+            value={value}
+            onChange={onChange}
+            {...register("content", { required: "Some text is required" })}
+          />
           {errors.content && (
             <span role="alert" style={{ color: "red", display: "block", margin: "1rem" }}>
               {errors.content.message}

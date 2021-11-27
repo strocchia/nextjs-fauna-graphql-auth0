@@ -10,6 +10,11 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 
 import { useUser } from "@auth0/nextjs-auth0";
 
+import dynamic from "next/dynamic";
+import "easymde/dist/easymde.min.css";
+
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
+
 const NewNote = () => {
   const [catchErrorMessage, setCatchErrorMessage] = useState("");
 
@@ -75,12 +80,11 @@ const NewNote = () => {
         </div>
         <div className="mb-3">
           <label>Content</label>
-          <textarea
-            className="w-full p-2 m-2 border border-solid border-gray-200"
-            rows={"5"}
-            type="text"
-            placeholder="Content goes here..."
-            {...register("content", { required: "Title is required" })}
+          <SimpleMDE
+            className="prose prose-md max-w-5xl"
+            value={value}
+            onChange={onChange}
+            {...register("content", { required: "Some text is required" })}
           />
           {errors.content && (
             <span role="alert" style={{ color: "red", display: "block", margin: "1rem" }}>
