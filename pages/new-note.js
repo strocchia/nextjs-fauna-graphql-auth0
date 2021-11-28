@@ -1,6 +1,6 @@
 // pages/new-note.js
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Router from "next/router";
 import { gql } from "graphql-request";
 import { useForm } from "react-hook-form";
@@ -13,10 +13,16 @@ import { useUser } from "@auth0/nextjs-auth0";
 import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
 
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
+const SimpleMdeReact = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
 const NewNote = () => {
+  const [value, setValue] = useState("");
+
   const [catchErrorMessage, setCatchErrorMessage] = useState("");
+
+  const onChange = useCallback((value) => {
+    setValue(value);
+  }, []);
 
   const {
     handleSubmit,
@@ -26,8 +32,13 @@ const NewNote = () => {
 
   const { user, isLoading } = useUser();
 
-  const onSubmit = handleSubmit(async ({ title, content }) => {
+  const onSubmit = handleSubmit(async ({ title }) => {
     setCatchErrorMessage("");
+
+    if (!value) {
+      setCatchErrorMessage("Content cannot be empty");
+      return;
+    }
 
     const mutation = gql`
       mutation CreateANote($title: String!, $content: String!, $owner: String!) {
@@ -42,7 +53,7 @@ const NewNote = () => {
     `;
 
     try {
-      await graphQLClient().request(mutation, { title, content, owner: user.sub });
+      await graphQLClient().request(mutation, { title, content: value, owner: user.sub });
       Router.push("/");
     } catch (error) {
       console.error(error);
@@ -80,11 +91,11 @@ const NewNote = () => {
         </div>
         <div className="mb-3">
           <label>Content</label>
-          <SimpleMDE
+          <SimpleMdeReact
             className="prose prose-md max-w-5xl"
             value={value}
             onChange={onChange}
-            {...register("content", { required: "Some text is required" })}
+            // {...register("content", { required: "Some text is required" })}
           />
           {errors.content && (
             <span role="alert" style={{ color: "red", display: "block", margin: "1rem" }}>

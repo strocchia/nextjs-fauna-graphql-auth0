@@ -38,16 +38,16 @@ export default function Home({ data_ssr }) {
     fetcher
   );
 
-  console.log(notes, data_ssr);
-
   return (
     <Layout>
       <h1 className="text-3xl mb-4">Next.js - FaunaDB - GraphQL CRUD App</h1>
 
       {user && (
-        <Link href="/new-note">
-          <a className="font-semibold">Create New Note</a>
-        </Link>
+        <div className="mt-4 mb-8">
+          <Link href="/new-note">
+            <a className="font-semibold hover:underline">Create New Note</a>
+          </Link>
+        </div>
       )}
       <div>
         {notes?.allNotes.data.map((note, idx) => (

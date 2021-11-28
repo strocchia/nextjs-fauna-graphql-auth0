@@ -11,6 +11,7 @@ import { graphQLClient } from "../utils/graphql-client";
 
 import dynamic from "next/dynamic";
 import "easymde/dist/easymde.min.css";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/dist/frontend";
 
 const SimpleMDE = dynamic(() => import("react-simplemde-editor"), { ssr: false });
 
@@ -34,36 +35,40 @@ const EditNote = ({ note, id }) => {
     },
   });
 
-  const onSubmit = () =>
-    handleSubmit(async (blah) => {
-      setCatchErrorMessage("");
+  // reset form upon reset or note dependencies triggering
+  useEffect(() => {
+    reset(note);
+  }, [reset, note]);
 
-      console.log(blah);
+  const onSubmit = handleSubmit(async ({ title }) => {
+    setCatchErrorMessage("");
 
-      const query = gql`
-        mutation Update($id: ID!, $title: String!, $content: String!) {
-          updateNote(id: $id, data: { title: $title, content: $content }) {
-            _id
-            task
-            completed
-          }
+    const query = gql`
+      mutation Update($id: ID!, $title: String!, $content: String!) {
+        updateNote(id: $id, data: { title: $title, content: $content }) {
+          _id
+          title
+          content
+          owner
+          _ts
         }
-      `;
-
-      const variables = {
-        id: id,
-        task: task,
-        completed: completed,
-      };
-
-      try {
-        await graphQLClient().request(query, variables);
-        Router.push("/");
-      } catch (error) {
-        console.error(error);
-        setCatchErrorMessage(error.message);
       }
-    });
+    `;
+
+    const variables = {
+      id: id,
+      title: title,
+      content: value,
+    };
+
+    try {
+      await graphQLClient().request(query, variables);
+      Router.push("/");
+    } catch (error) {
+      console.error(error);
+      setCatchErrorMessage(error.message);
+    }
+  });
 
   return (
     <>
@@ -93,12 +98,7 @@ const EditNote = ({ note, id }) => {
         </div>
         <div className="mb-3">
           <label>Content</label>
-          <SimpleMDE
-            className="prose prose-md max-w-5xl"
-            value={value}
-            onChange={onChange}
-            {...register("content", { required: "Some text is required" })}
-          />
+          <SimpleMDE className="prose prose-md max-w-5xl" value={value} onChange={onChange} />
           {errors.content && (
             <span role="alert" style={{ color: "red", display: "block", margin: "1rem" }}>
               {errors.content.message}
@@ -112,13 +112,7 @@ const EditNote = ({ note, id }) => {
           >
             Update
           </button>
-          <Link
-            href="/"
-            // type="reset"
-            // className="bg-red-500 text-white p-2 border-none rounded-md cursor-pointer"
-            // onClick={(e) => Router.push("/")}
-          >
-            {/* <a className="bg-red-500 text-white p-3 border-none rounded-md cursor-pointer"> */}
+          <Link href="/">
             <a className="mt-3 inline-block bg-red-500 hover:bg-red-800 text-white py-2 px-3 border-none rounded-md cursor-pointer mr-3">
               Cancel
             </a>
@@ -133,3 +127,5 @@ const EditNote = ({ note, id }) => {
 };
 
 export default EditNote;
+
+export const getServerSideProps = withPageAuthRequired();

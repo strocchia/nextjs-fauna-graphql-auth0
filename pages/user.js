@@ -14,9 +14,11 @@ export default function User() {
     <Layout>
       {user && (
         <div>
-          <Image src={user.picture} alt={user.nickname} width={40} height={40} />
-          <h2>Name: {user.name}</h2>
-          <p>E-mail: {user.email}</p>
+          <img className="mb-2" src={user.picture} alt={user.nickname} width={40} height={40} />
+          <h2 className="text-xl mb-2">Name: {user.name}</h2>
+          <p>
+            E-mail: <span className="italic">{user.email}</span>
+          </p>
         </div>
       )}
     </Layout>

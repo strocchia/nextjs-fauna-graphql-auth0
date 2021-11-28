@@ -40,7 +40,13 @@ const Edit = () => {
     defaultValues: {},
   });
 
-  if (error) return <div>failed to load</div>;
+  if (error)
+    return (
+      <div>
+        failed to load. <br />
+        {error.message}
+      </div>
+    );
   if (!data) return <div>Loading...</div>;
 
   return (

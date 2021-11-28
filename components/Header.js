@@ -25,11 +25,11 @@ const Header = () => {
                       Home
                     </a>
                   </Link>
-                  <Link href="/my-todos">
+                  {/* <Link href="/my-todos">
                     <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
                       My Todos
                     </a>
-                  </Link>
+                  </Link> */}
                   <Link href="/my-page">
                     <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
                       My Page

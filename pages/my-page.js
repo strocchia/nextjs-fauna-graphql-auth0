@@ -11,7 +11,7 @@ import { graphQLClient } from "../utils/graphql-client";
 
 import { getSession, useUser, withPageAuthRequired } from "@auth0/nextjs-auth0";
 
-const MyPage = ({ user, data_ssr }) => {
+const MyPage = ({ user }) => {
   // const { user, error, isLoading } = useUser();
 
   const variables = {
@@ -39,6 +39,10 @@ const MyPage = ({ user, data_ssr }) => {
     fetcher
   );
 
+  const onDelete = (id) => {
+    console.log(id);
+  };
+
   // if (!user) return <Layout>Waiting</Layout>;
 
   if (error) return <Layout>{error.message}</Layout>;
@@ -47,16 +51,23 @@ const MyPage = ({ user, data_ssr }) => {
 
   return (
     <Layout>
-      {data.note_by_user.data.map((d, idx) => (
-        <div className="mb-8" key={d._id}>
-          <pre>{JSON.stringify(d, null, 2)}</pre>
-          <span className="border-l-2 border-r-2 border-gray-400 py-1 px-2 ml-8">
-            <Link href={`/note/${d._id}`}>
-              <a>Edit</a>
-            </Link>
-          </span>
-        </div>
-      ))}
+      {data.note_by_user.data.map((d, idx) => {
+        const { _id, title, content } = d;
+
+        return (
+          <div className="mb-8" key={d._id}>
+            <pre>{JSON.stringify({ _id, title, content }, null, 2)}</pre>
+            <span className="border-r-2 border-gray-400 py-1 px-2 ml-8">
+              <Link href={`/note/${d._id}`}>
+                <a>Edit</a>
+              </Link>
+            </span>
+            <span className="border-l-2 border-gray-400 py-1 px-2 ml-8 cursor-pointer">
+              <a onClick={() => onDelete(d._id)}>Delete</a>
+            </span>
+          </div>
+        );
+      })}
     </Layout>
   );
 };
