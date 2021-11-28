@@ -32,7 +32,7 @@ const Header = () => {
                   </Link> */}
                   <Link href="/my-page">
                     <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
-                      My Page
+                      My Protected Page
                     </a>
                   </Link>
                 </div>
