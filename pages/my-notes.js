@@ -61,13 +61,13 @@ const MyNotes = ({ user }) => {
           </Link>
         </div>
       )}
-      {data.note_by_user.data.map((d, idx) => {
-        return (
-          <div>
+      <div>
+        {data?.note_by_user.data.map((d, idx) => {
+          return (
             <FormattedNote key={d._id || idx} user={user} onenote={d} triggerMutate={mutate} />
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </Layout>
   );
 };
