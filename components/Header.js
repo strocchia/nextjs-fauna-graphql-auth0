@@ -43,9 +43,9 @@ const Header = () => {
                 </div>
                 <div className="ml-4">
                   <span>
-                    Hello,
+                    Hello,{" "}
                     <Link href="/user">
-                      <a className="mt-3 inline-block text-green-600 hover:text-green-800 font-bold p-2">
+                      <a className="mt-3 inline-block text-green-600 hover:text-green-800 font-bold py-2">
                         {user.name || user.email}
                       </a>
                     </Link>
