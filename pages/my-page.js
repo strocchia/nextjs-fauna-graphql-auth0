@@ -50,7 +50,8 @@ const MyPage = ({ user }) => {
   if (!data) return <Layout>retrieving data...</Layout>;
 
   return (
-    <Layout>
+    <Layout title="JSON notes">
+      <h2 className="text-xl text-center mb-4">Notes (in JSON form)</h2>
       {data.note_by_user.data.map((d, idx) => {
         const { _id, title, content } = d;
 

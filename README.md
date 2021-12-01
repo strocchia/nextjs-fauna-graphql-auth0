@@ -1,3 +1,10 @@
+Amalgamation and adaptation of 
+
+1. https://github.com/jamesqquick/nextjs-crash-course-fauna-auth0-swr-react-hook-form-tailwind/tree/part-1-starter
+2. https://javascript.plainenglish.io/build-a-snippets-app-with-nextjs-faunadb-tailwind-css-auth0-413c52273ba9.
+
+=====
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
