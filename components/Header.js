@@ -19,7 +19,7 @@ const Header = () => {
           <div className="flex flex-wrap justify-evenly">
             {user && (
               <>
-                <div className="space-x-12">
+                <div className="space-x-8">
                   <Link href="/">
                     <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
                       Home
@@ -30,9 +30,14 @@ const Header = () => {
                       My Todos
                     </a>
                   </Link> */}
-                  <Link href="/my-page">
+                  <Link href="/my-notes">
                     <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
-                      My Page
+                      Notes I Wrote
+                    </a>
+                  </Link>
+                  <Link href="/protected-page">
+                    <a className="mt-3 inline-block bg-red-800 hover:bg-red-900 text-white font-bold p-2 rounded">
+                      Another Protected Page
                     </a>
                   </Link>
                 </div>

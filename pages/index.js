@@ -40,20 +40,13 @@ export default function Home({ data_ssr }) {
 
   return (
     <Layout>
-      <h1 className="text-3xl mb-4">Next.js - FaunaDB - GraphQL CRUD App</h1>
+      <h1 className="text-2xl mb-8">Next.js - FaunaDB - GraphQL CRUD App</h1>
 
-      {user && (
-        <div className="mt-4 mb-8">
-          <Link href="/new-note">
-            <a className="font-semibold hover:underline">Create New Note</a>
-          </Link>
-        </div>
-      )}
       <div>
         {notes?.allNotes.data.map((note, idx) => (
           <FormattedNote
             key={note._id || idx}
-            user={user}
+            user={null} // no editing notes from here
             onenote={note}
             triggerMutate={notes_mutate}
           />
