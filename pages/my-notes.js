@@ -57,7 +57,9 @@ const MyNotes = ({ user }) => {
       {user && (
         <div className="mt-4 mb-8">
           <Link href="/new-note">
-            <a className="font-semibold hover:underline">Create New Note</a>
+            <a className="font-semibold hover:underline inline-block hover:bg-green-500 px-2 py-1 rounded">
+              Create New Note
+            </a>
           </Link>
         </div>
       )}
